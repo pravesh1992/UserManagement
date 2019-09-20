@@ -1,0 +1,11 @@
+<service-context>
+    <jms-senders>
+        <jms-sender name="cluster-creation-request-sender" queueName="CLUSTER_CREATION_REQUEST_QUEUE"></jms-sender>
+    </jms-senders>
+    <jms-listeners name="cluster-creation-request-listener" queueName="CLUSTER_CREATION_REQUEST_QUEUE" poolingInterval="1000" sleepingInterval="10000"></jms-listeners>
+    <service-configuration>
+        <section name="">
+            <entry name="" value=""/>
+        </section>
+    </service-configuration>
+</service-context>
