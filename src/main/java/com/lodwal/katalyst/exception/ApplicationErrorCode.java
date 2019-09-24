@@ -4,8 +4,9 @@ public enum ApplicationErrorCode {
 
   INTERNAL_SERVER_ERROR(2001, "Internal Server Error"),
   INVALID_PARAMETER_VALUE(2002, "Invalid Parameter Value"),
-  ERROR_INVALID_ID(2003, "Invalid Id"),
-  INVALID_CREDENTIALS(2004,"Invalid Credentials");
+  INVALID_ATTRIBUTE_VALUE(2003, "Invalid Attribute Value"),
+  ERROR_INVALID_ID(2004, "Invalid Id"),
+  INVALID_CREDENTIALS(2005, "Invalid Credentials");
 
   int code;
 

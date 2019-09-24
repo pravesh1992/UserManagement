@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.200.100.63/pravesh_db?autoReconnect=true
+    username: user
+    password: user
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      show_sql: true
+      format_sql : true
+
+server.port : 8091

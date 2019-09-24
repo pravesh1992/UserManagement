@@ -36,7 +36,7 @@ public class LoginAPI {
       // First clear all existing application tokens
       applicationTokenAPI.clearAllApplicationTokens(dbUser.getUserId());
       ApplicationToken applicationToken = this.applicationTokenAPI.createApplicationToken(dbUser.getUserId());
-      return new LoginResult(UserAPI.convert(dbUser), applicationToken);
+      return new LoginResult(UserService.convert(dbUser), applicationToken);
     } catch (Exception exception) {
       throw ApplicationException.analyzeException(exception);
     }

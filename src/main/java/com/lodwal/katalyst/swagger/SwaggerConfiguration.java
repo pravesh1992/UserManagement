@@ -18,7 +18,7 @@ public class SwaggerConfiguration {
   @Bean
   public Docket getDocket() {
     return new Docket(DocumentationType.SWAGGER_2).select()
-      .apis(RequestHandlerSelectors.basePackage("com.lodwal.katalyst"))
+      .apis(RequestHandlerSelectors.basePackage("com.lodwal.katalyst.controllers"))
       .build().apiInfo(getAPIInfo());
   }
 

@@ -1,9 +1,22 @@
 package com.lodwal.katalyst.business.apis;
 
 import com.lodwal.katalyst.business.objects.User;
+import com.lodwal.katalyst.exception.ApplicationErrorCode;
+import com.lodwal.katalyst.exception.ApplicationException;
 import com.lodwal.katalyst.persistence.objects.DBUser;
+import org.springframework.stereotype.Service;
 
-public class UserAPI {
+@Service
+public class UserService {
+
+
+  public User register(User user) throws ApplicationException {
+    if (user == null)
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, "user can't be null or empty");
+
+
+    return null;
+  }
 
   public static User convert(DBUser dbUser) {
     User user = new User();

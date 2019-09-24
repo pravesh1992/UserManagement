@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Api(description = "This controller class contains rest api related sign-in/sign-out operations")
 @RestController
 @RequestMapping("/api/loginInterface")
-@Api(description = "This controller class contains rest api related sign-in/sign-out operations")
 public class LoginController {
 
   @Autowired
