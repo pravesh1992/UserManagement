@@ -4,6 +4,7 @@ import com.lodwal.katalyst.business.objects.User;
 import com.lodwal.katalyst.exception.ApplicationErrorCode;
 import com.lodwal.katalyst.exception.ApplicationException;
 import com.lodwal.katalyst.persistence.objects.DBUser;
+import com.lodwal.katalyst.utils.ObjectValidator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +14,7 @@ public class UserService {
   public User register(User user) throws ApplicationException {
     if (user == null)
       throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, "user can't be null or empty");
-
-
+    ObjectValidator.validate(user, "user");
     return null;
   }
 

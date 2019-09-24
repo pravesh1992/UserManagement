@@ -1,23 +1,36 @@
 package com.lodwal.katalyst.business.objects;
 
+import com.lodwal.katalyst.annotations.NotEmpty;
+import com.lodwal.katalyst.annotations.NotNull;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
 
   private String userId;
 
+  @NotNull
+  @NotEmpty
   private String firstName;
 
+  @NotNull
+  @NotEmpty
   private String lastName;
 
   private String dob;
 
+  @NotNull
+  @NotEmpty
   private String mobileNo;
 
   private String address;
 
+  @NotNull
+  @NotEmpty
   private String emailId;
 
+  @NotNull
+  @NotEmpty
   private String password;
 
   private byte[] profileImage;

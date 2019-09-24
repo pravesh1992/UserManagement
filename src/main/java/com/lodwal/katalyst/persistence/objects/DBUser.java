@@ -30,7 +30,7 @@ public class DBUser implements Serializable {
   @Column(name = "dbo")
   private Date dob;
 
-  @Column(name = "mobile_no")
+  @Column(name = "mobile_no", nullable = false)
   private String mobileNo;
 
   @Column(name = "address")
