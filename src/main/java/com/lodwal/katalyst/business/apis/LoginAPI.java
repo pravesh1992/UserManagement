@@ -30,8 +30,8 @@ public class LoginAPI {
       DBUser dbUser = this.userJpaRepository.findByEmailId(emailId);
       if (dbUser == null)
         throw new ApplicationException(ApplicationErrorCode.ERROR_INVALID_ID, "Email id doesn't exists, emailId:" + emailId);
-      String encryotedUserInputPassowrd = PasswordAPI.getSecuredPassword(decodedPassword, dbUser.getSalt());
-      if (!encryotedUserInputPassowrd.equals(dbUser.getPassword()))
+      String userPassword = PasswordAPI.getSecuredPassword(decodedPassword, dbUser.getSalt());
+      if (!userPassword.equals(dbUser.getPassword()))
         throw new ApplicationException(ApplicationErrorCode.INVALID_CREDENTIALS, ApplicationErrorCode.INVALID_CREDENTIALS.getMessage());
       // First clear all existing application tokens
       applicationTokenAPI.clearAllApplicationTokens(dbUser.getUserId());

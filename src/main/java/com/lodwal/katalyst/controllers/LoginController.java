@@ -16,11 +16,11 @@ import javax.validation.constraints.NotNull;
 
 @Api(description = "This controller class contains rest api related sign-in/sign-out operations")
 @RestController
-@RequestMapping("/api/loginInterface")
+@RequestMapping("/api/LoginController")
 public class LoginController {
 
   @Autowired
-  private LoginAPI loginAPI;
+  LoginAPI loginAPI;
 
   @ApiOperation(value = "This is used to login to system", response = LoginResult.class, httpMethod = "POST")
   @RequestMapping(path = "/v1/login", method = RequestMethod.POST)

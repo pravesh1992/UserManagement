@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  * @since 2.2.0*
  */
 
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface NotNull {

@@ -27,7 +27,7 @@ public class DBUser implements Serializable {
   @Column(name = "last_name", length = 50, nullable = false)
   private String lastName;
 
-  @Column(name = "dbo")
+  @Column(name = "dob")
   private Date dob;
 
   @Column(name = "mobile_no", nullable = false)

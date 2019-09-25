@@ -1,7 +1,9 @@
 package com.lodwal.katalyst.business.objects;
 
+import com.lodwal.katalyst.annotations.MaxLength;
 import com.lodwal.katalyst.annotations.NotEmpty;
 import com.lodwal.katalyst.annotations.NotNull;
+import com.lodwal.katalyst.annotations.Pattern;
 
 import java.io.Serializable;
 
@@ -11,29 +13,34 @@ public class User implements Serializable {
 
   @NotNull
   @NotEmpty
+  @MaxLength(value = 50)
   private String firstName;
 
   @NotNull
   @NotEmpty
+  @MaxLength(value = 50)
   private String lastName;
 
   private String dob;
 
   @NotNull
   @NotEmpty
+  @Pattern(value = "(0/91)?[7-9][0-9]{9}")
   private String mobileNo;
 
+  @MaxLength
   private String address;
 
   @NotNull
   @NotEmpty
+  @Pattern(value = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$")
+  @MaxLength
   private String emailId;
 
   @NotNull
   @NotEmpty
+  @MaxLength
   private String password;
-
-  private byte[] profileImage;
 
   public String getUserId() {
     return userId;
@@ -63,10 +70,6 @@ public class User implements Serializable {
     return password;
   }
 
-  public byte[] getProfileImage() {
-    return profileImage;
-  }
-
   public String getAddress() {
     return address;
   }
@@ -93,14 +96,6 @@ public class User implements Serializable {
 
   public void setEmailId(String emailId) {
     this.emailId = emailId;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public void setProfileImage(byte[] profileImage) {
-    this.profileImage = profileImage;
   }
 
   public void setAddress(String address) {
