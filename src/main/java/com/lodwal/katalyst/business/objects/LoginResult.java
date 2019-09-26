@@ -12,4 +12,12 @@ public class LoginResult implements Serializable {
     this.user = user;
     this.applicationToken = applicationToken;
   }
+
+  public User getUser() {
+    return user;
+  }
+
+  public ApplicationToken getApplicationToken() {
+    return applicationToken;
+  }
 }

@@ -21,6 +21,7 @@ public class User implements Serializable {
   @MaxLength(value = 50)
   private String lastName;
 
+  @Pattern(value = "^[0-3]?[0-9]-[0-3]?[0-9]-(?:[0-9]{2})?[0-9]{2}$")
   private String dob;
 
   @NotNull

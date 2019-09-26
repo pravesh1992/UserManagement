@@ -35,4 +35,10 @@ public class Utility {
       throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " value:" + value);
     return new String(base64.decode(value));
   }
+
+  public static String encode(final String value) throws ApplicationException {
+    if (StringUtils.isEmpty(value))
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " value:" + value);
+    return new String(base64.encode(value.getBytes()));
+  }
 }

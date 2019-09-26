@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@ComponentScan(basePackages = "com.lodwal.katalyst")
 @EnableAutoConfiguration
+@ComponentScan(basePackages = "com.lodwal.katalyst")
 @EnableJpaRepositories(basePackages = "com.lodwal.katalyst.persistence.repository")
 @EntityScan(basePackages = "com.lodwal.katalyst.persistence.objects")
 @SpringBootApplication
