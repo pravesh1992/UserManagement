@@ -20,7 +20,7 @@ public class ApplicationTokenAPI {
   public static final int DEFAULT_EXPIRY_SECONDS = 300;
 
   @Autowired
-  private ApplicationTokenJpaRepository applicationTokenJpaRepository;
+  ApplicationTokenJpaRepository applicationTokenJpaRepository;
 
   public void clearAllApplicationTokens(String userId) throws ApplicationException {
     if (StringUtils.isEmpty(userId))
