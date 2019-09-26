@@ -41,4 +41,34 @@ public class LoginAPI {
       throw ApplicationException.analyzeException(exception);
     }
   }
+
+  public void changePassword(final String emailId, final String oldPassword, final String newPassword) throws ApplicationException {
+    if (StringUtils.isEmpty(emailId))
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " emailId:" + emailId);
+    if (StringUtils.isEmpty(oldPassword))
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " of oldPassword");
+    if (StringUtils.isEmpty(newPassword))
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " of newPassword");
+    try {
+      DBUser dbUser = this.userJpaRepository.findByEmailId(emailId);
+      if (dbUser == null)
+        throw new ApplicationException(ApplicationErrorCode.ERROR_INVALID_ID, "Email id doesn't exists, emailId:" + emailId);
+      String oldDecodedPassword = Utility.decode(oldPassword);
+      String userOldPassword = PasswordAPI.getSecuredPassword(oldDecodedPassword, dbUser.getSalt());
+      if (!userOldPassword.equals(dbUser.getPassword()))
+        throw new ApplicationException(ApplicationErrorCode.INVALID_CREDENTIALS, "Given old password is not last password, try again with correct password");
+      String newDecodedPassword = Utility.decode(newPassword);
+      if (newDecodedPassword.equals(oldDecodedPassword))
+        throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, "New password can't be same old password");
+      byte[] newSalt = PasswordAPI.getSalt();
+      String encryptedNewPassword = PasswordAPI.getSecuredPassword(newDecodedPassword, newSalt);
+      dbUser.setSalt(newSalt);
+      dbUser.setPassword(encryptedNewPassword);
+      this.userJpaRepository.save(dbUser);
+      this.applicationTokenAPI.clearAllApplicationTokens(dbUser.getUserId());
+    } catch (
+      Exception exception) {
+      throw ApplicationException.analyzeException(exception);
+    }
+  }
 }

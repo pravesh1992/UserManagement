@@ -6,6 +6,7 @@ import com.lodwal.katalyst.exception.ApplicationException;
 import com.lodwal.katalyst.persistence.objects.DBApplicationToken;
 import com.lodwal.katalyst.persistence.repository.ApplicationTokenJpaRepository;
 import com.lodwal.katalyst.utils.Utility;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class ApplicationTokenAPI {
     if (StringUtils.isEmpty(userId))
       throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " userId:" + userId);
     List<DBApplicationToken> dbApplicationTokens = this.applicationTokenJpaRepository.findByUserId(userId);
-    this.applicationTokenJpaRepository.deleteAll(dbApplicationTokens);
+    if (!CollectionUtils.isEmpty(dbApplicationTokens))
+      this.applicationTokenJpaRepository.deleteAll(dbApplicationTokens);
   }
 
   public ApplicationToken createApplicationToken(String userId) throws ApplicationException {
