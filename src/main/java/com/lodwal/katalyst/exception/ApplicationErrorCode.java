@@ -7,7 +7,9 @@ public enum ApplicationErrorCode {
   INVALID_ATTRIBUTE_VALUE(2003, "Invalid Attribute Value"),
   ERROR_INVALID_ID(2004, "Invalid Id"),
   INVALID_CREDENTIALS(2005, "Invalid Credentials"),
-  OBJECT_ALREADY_EXISTS(2006, "Object Already Exists");
+  OBJECT_ALREADY_EXISTS(2006, "Object Already Exists"),
+  ERROR_INVALID_TOKEN_ID(2007, "TokenId is Invalid"),
+  TOKEN_EXPIRED(2008, "TokenId Expired");
 
   int code;
 

@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ApplicationTokenAPI {
+public class ApplicationTokenService {
 
   public static final int DEFAULT_EXPIRY_SECONDS = 300;
 
@@ -24,7 +25,7 @@ public class ApplicationTokenAPI {
 
   public void clearAllApplicationTokens(String userId) throws ApplicationException {
     if (StringUtils.isEmpty(userId))
-      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " userId:" + userId);
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + ", userId:" + userId);
     List<DBApplicationToken> dbApplicationTokens = this.applicationTokenJpaRepository.findByUserId(userId);
     if (!CollectionUtils.isEmpty(dbApplicationTokens))
       this.applicationTokenJpaRepository.deleteAll(dbApplicationTokens);
@@ -32,17 +33,31 @@ public class ApplicationTokenAPI {
 
   public ApplicationToken createApplicationToken(String userId) throws ApplicationException {
     if (StringUtils.isEmpty(userId))
-      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + " userId:" + userId);
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + ", userId:" + userId);
     DBApplicationToken dbApplicationToken = new DBApplicationToken(DBApplicationToken.CLASS_CODE + "_" + Utility.GUID(userId));
     dbApplicationToken.setUserId(userId);
     long currentTimeStamp = System.currentTimeMillis();
     dbApplicationToken.setTokenCreationTime(new Timestamp(currentTimeStamp));
     dbApplicationToken.setExpirySeconds(DEFAULT_EXPIRY_SECONDS);
-    dbApplicationToken.setTokenExpiryTime(new Timestamp(currentTimeStamp + (1000 * ApplicationTokenAPI.DEFAULT_EXPIRY_SECONDS)));
+    dbApplicationToken.setTokenExpiryTime(new Timestamp(currentTimeStamp + (1000 * ApplicationTokenService.DEFAULT_EXPIRY_SECONDS)));
     dbApplicationToken = this.applicationTokenJpaRepository.saveAndFlush(dbApplicationToken);
-    return ApplicationTokenAPI.convert(dbApplicationToken);
+    return ApplicationTokenService.convert(dbApplicationToken);
   }
 
+  public ApplicationToken validateApplicationToken(String tokenId) throws ApplicationException {
+    if (StringUtils.isEmpty(tokenId))
+      throw new ApplicationException(ApplicationErrorCode.INVALID_PARAMETER_VALUE, ApplicationErrorCode.INVALID_PARAMETER_VALUE.getMessage() + ", tokenId:" + tokenId);
+    Optional<DBApplicationToken> optionalDBApplicationToken = this.applicationTokenJpaRepository.findById(tokenId);
+    if (!optionalDBApplicationToken.isPresent())
+      throw new ApplicationException(ApplicationErrorCode.ERROR_INVALID_TOKEN_ID, ApplicationErrorCode.ERROR_INVALID_TOKEN_ID.getMessage() + ", tokenId:" + tokenId);
+    DBApplicationToken dbApplicationToken = optionalDBApplicationToken.get();
+    long currentTime = System.currentTimeMillis();
+    if (currentTime > dbApplicationToken.getTokenExpiryTime().getTime())
+      throw new ApplicationException(ApplicationErrorCode.TOKEN_EXPIRED, ApplicationErrorCode.TOKEN_EXPIRED.getMessage() + ", tokenId:" + tokenId);
+    dbApplicationToken.setTokenExpiryTime(new Timestamp(currentTime + 60 * DEFAULT_EXPIRY_SECONDS));
+    dbApplicationToken = this.applicationTokenJpaRepository.saveAndFlush(dbApplicationToken);
+    return convert(dbApplicationToken);
+  }
 
   public static ApplicationToken convert(DBApplicationToken dbApplicationToken) {
     ApplicationToken applicationToken = new ApplicationToken();

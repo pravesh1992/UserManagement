@@ -1,6 +1,6 @@
 package com.lodwal.katalyst.persistence.objects;
 
-import com.lodwal.katalyst.business.apis.ApplicationTokenAPI;
+import com.lodwal.katalyst.business.apis.ApplicationTokenService;
 import com.lodwal.katalyst.persistence.constants.TableNames;
 
 import javax.persistence.Column;
@@ -31,7 +31,7 @@ public class DBApplicationToken implements Serializable {
   private Timestamp tokenExpiryTime;
 
   @Column(name = "expiry_seconds", nullable = false)
-  private int expirySeconds = ApplicationTokenAPI.DEFAULT_EXPIRY_SECONDS;
+  private int expirySeconds = ApplicationTokenService.DEFAULT_EXPIRY_SECONDS;
 
   public DBApplicationToken() {
   }

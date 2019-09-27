@@ -39,6 +39,10 @@ public class DBUser implements Serializable {
   @Column(name = "email_id", unique = true, nullable = false)
   private String emailId;
 
+  @Column(name = "role", nullable = false, length = 50)
+  private String role;
+
+
   @Column(name = "password", nullable = false)
   private String password;
 
@@ -116,6 +120,14 @@ public class DBUser implements Serializable {
 
   public void setEmailId(String emailId) {
     this.emailId = emailId;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 
   public void setPassword(String password) {

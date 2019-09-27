@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginAPI {
+public class LoginService {
 
   @Autowired
   UserJpaRepository userJpaRepository;
 
   @Autowired
-  ApplicationTokenAPI applicationTokenAPI;
+  ApplicationTokenService applicationTokenAPI;
 
   public LoginResult login(final String emailId, final String securedPassword) throws ApplicationException {
     if (StringUtils.isEmpty(emailId))

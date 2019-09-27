@@ -43,6 +43,10 @@ public class User implements Serializable {
   @MaxLength
   private String password;
 
+  @NotNull
+  @NotEmpty
+  private String role;
+
   public String getUserId() {
     return userId;
   }
@@ -101,5 +105,13 @@ public class User implements Serializable {
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 }

@@ -1,5 +1,6 @@
 package com.lodwal.katalyst.business.apis;
 
+import com.lodwal.katalyst.business.constants.SystemRole;
 import com.lodwal.katalyst.business.objects.User;
 import com.lodwal.katalyst.exception.ApplicationErrorCode;
 import com.lodwal.katalyst.exception.ApplicationException;
@@ -34,7 +35,7 @@ public class UserService {
     try {
       DBUser dbUserExisting = this.userJpaRepository.findByEmailId(user.getEmailId());
       if (dbUserExisting != null)
-        throw new ApplicationException(ApplicationErrorCode.INTERNAL_SERVER_ERROR, "user already exists in system with email id:" + user.getEmailId());
+        throw new ApplicationException(ApplicationErrorCode.OBJECT_ALREADY_EXISTS, "user already exists in system with email id:" + user.getEmailId());
       byte[] salt = PasswordAPI.getSalt();
       String encryptedPassword = PasswordAPI.getSecuredPassword(user.getPassword(), salt);
       DBUser dbUser = convert(user);
@@ -56,6 +57,7 @@ public class UserService {
     user.setAddress(dbUser.getAddress());
     user.setMobileNo(dbUser.getMobileNo());
     user.setDob(dbUser.getDob().toString());
+    user.setRole(dbUser.getRole());
     return user;
   }
 
@@ -71,6 +73,12 @@ public class UserService {
     dbUser.setEmailId(user.getEmailId());
     dbUser.setAddress(user.getAddress());
     dbUser.setMobileNo(user.getMobileNo());
+    try {
+      SystemRole.valueOf(user.getRole());
+      dbUser.setRole(user.getRole());
+    } catch (Exception exception) {
+      throw new ApplicationException(ApplicationErrorCode.INVALID_ATTRIBUTE_VALUE, ApplicationErrorCode.INVALID_ATTRIBUTE_VALUE.getMessage() + ", role : " + user.getRole());
+    }
     if (!StringUtils.isBlank(user.getDob()) && !StringUtils.isEmpty(user.getDob())) {
       try {
         dbUser.setDob(new Date(simpleDateFormat.parse(user.getDob()).getTime()));

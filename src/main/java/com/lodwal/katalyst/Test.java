@@ -13,7 +13,7 @@ public class Test {
     Matcher matcher = pattern.matcher(emailId);
     System.out.println(emailId + " : " + matcher.matches());
     String decodedString = "datametica";
-    String decodedString1 = "datametica1";
+    String decodedString1 = "datametica2";
     System.out.println("Encoded String for " + decodedString + " is :" + Utility.encode(decodedString));
     System.out.println("Encoded String for " + decodedString1 + " is :" + Utility.encode(decodedString1));
 
