@@ -1,5 +1,6 @@
 package com.lodwal.katalyst.controllers;
 
+import com.lodwal.katalyst.annotations.RestApi;
 import com.lodwal.katalyst.business.apis.LoginService;
 import com.lodwal.katalyst.business.objects.LoginResult;
 import com.lodwal.katalyst.exception.ApplicationException;
@@ -25,12 +26,14 @@ public class LoginController {
   @Autowired
   LoginService loginAPI;
 
+  @RestApi
   @ApiOperation(value = "This is used to login to system", response = LoginResult.class, httpMethod = "POST")
   @RequestMapping(path = "/v1/login", method = RequestMethod.POST)
   public LoginResult login(@NotNull @NotBlank @RequestParam(name = "emailId") final String emailId, @NotNull @NotBlank @RequestParam(name = "password") final String securedPassword) throws ApplicationException {
     return this.loginAPI.login(emailId, securedPassword);
   }
 
+  @RestApi
   @ApiOperation(value = "This is used to changes password to system for given email id", response = String.class, httpMethod = "POST")
   @RequestMapping(path = "/v1/changePassword", method = RequestMethod.POST)
   public ResponseEntity<String> changePassword(@NotNull @NotBlank @RequestHeader(name = "tokenId") final String tokenId, @NotNull @NotBlank @RequestParam(name = "emailId") final String emailId, @NotNull @NotBlank @RequestParam(name = "oldPassword") final String oldPassword, @NotNull @NotBlank @RequestParam(name = "newPassword") final String newPassword) throws ApplicationException {
