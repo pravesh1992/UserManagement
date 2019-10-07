@@ -2,7 +2,9 @@ package com.lodwal.katalyst.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ApplicationErrorResponse {
+import java.io.Serializable;
+
+public class ApplicationErrorResponse implements Serializable {
   /**
    * Return application specific error code
    */

@@ -48,5 +48,4 @@ public class ApplicationException extends Exception {
   public static ApplicationException analyzeException(Exception exception) {
     return new ApplicationException(ApplicationErrorCode.INTERNAL_SERVER_ERROR, exception.getMessage(), exception);
   }
-
 }

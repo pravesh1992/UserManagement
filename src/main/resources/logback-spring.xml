@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_ARCHIVE" value="logs/archive"/>
+
+    <!-- Configuring FILE appender.  This appender is used to print logs on log file-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/user_management.log</file>
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %level %logger - %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_ARCHIVE}/user_management.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- each archived file, size max 10MB -->
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>3GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>1000</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Configuring logger -->
+    <logger name="com.datametica.flamingo" level="INFO" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!-- Configuring CONSOLE appender. This appender is used to print logs on console, comment it, not required in production mode -->
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <charset>utf-8</charset>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %level %logger - %msg%n</Pattern>
+            </encoder>
+        </appender>
+
+    <!-- Disable CONSOLE to print logs on console, comment it, not required in production mode -->
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+</configuration>

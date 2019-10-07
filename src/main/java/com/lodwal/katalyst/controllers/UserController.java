@@ -27,7 +27,7 @@ public class UserController {
   @RestApi
   @ApiOperation(value = "This is used to register a user to system", response = User.class, httpMethod = "POST")
   @RequestMapping(path = "/v1/register", method = RequestMethod.POST)
-  public User register(@NotNull @NotBlank @RequestHeader(name = "tokenId") String tokenId, @RequestBody User user) throws ApplicationException {
+  public User register(@NotNull @NotBlank @RequestHeader(name = "tokenId") final String tokenId, @RequestBody User user) throws ApplicationException {
     return userService.register(user);
   }
 }
